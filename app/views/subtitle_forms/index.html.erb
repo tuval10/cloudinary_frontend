@@ -1,0 +1,3 @@
+<%= form_for @subtitle_form, as: :subtitle_form, url: subtitle_form_path(@post), method: :patch, remote: true do |f| %>
+  <%= react_component 'SubtitleForm', {form: { cloud_name: @subtitle_form.cloud_name, video_public_id: @subtitle_form.video_public_id}} %>
+<% end %>
