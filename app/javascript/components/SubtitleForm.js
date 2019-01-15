@@ -171,7 +171,7 @@ class SubtitleForm extends React.Component {
                    value={this.state.results} id="results"/>
           </div>
           <label className="col-sm-1">
-            <button type="button" className="btn btn-info btn-lg">
+            <button type="button" className="btn btn-info btn-lg" onClick={this.onSubmit}>
               Refresh
             </button>
           </label>

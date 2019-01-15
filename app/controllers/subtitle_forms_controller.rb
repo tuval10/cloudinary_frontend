@@ -10,7 +10,8 @@ class SubtitleFormsController < ApplicationController
     subtitles = @subtitle_form.subtitle_lines.map(&:to_obj)
     message = CloudinarySubtitlesEmbedder.add_subtitles_to_video(
       @subtitle_form.video_public_id,
-      "subtitles" => subtitles
+      {"subtitles" => subtitles},
+      @subtitle_form.cloud_name
     )
     render json: { status: 'success', message: message}
   end

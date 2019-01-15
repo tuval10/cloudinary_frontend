@@ -37,7 +37,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'webpacker'
 gem 'react-rails'
-gem 'cloudinary_subtitles_embedder', '~> 0.1.4'
+gem 'cloudinary_subtitles_embedder', '~> 0.1.5'
 
 # for bootstrap
 gem 'bootstrap'
