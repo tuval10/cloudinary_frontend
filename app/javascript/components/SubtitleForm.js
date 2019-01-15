@@ -23,20 +23,22 @@ class SubtitleForm extends React.Component {
     this.handleSubmitSuccess = this.handleSubmitSuccess.bind(this);
   }
 
-  onSubmit(e){
+  onSubmit(e) {
     let removeKey = (subtitle) => {
-      const { key, ...rest } = subtitle;
+      const {key, ...rest} = subtitle;
       return rest;
     };
-    this.setState({ loading: true, results: "", error: null });
+    this.setState({loading: true, results: "", error: null});
     axios({
       method: 'PATCH',
       url: '/subtitle_form',
-      data: {subtitle_form: {
-        cloud_name: this.state.cloud_name,
-        video_public_id: this.state.video_public_id,
-        subtitle_lines: this.state.subtitles.map(removeKey)
-      }},
+      data: {
+        subtitle_form: {
+          cloud_name: this.state.cloud_name,
+          video_public_id: this.state.video_public_id,
+          subtitle_lines: this.state.subtitles.map(removeKey)
+        }
+      },
       headers: {
         'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
       }
@@ -45,24 +47,24 @@ class SubtitleForm extends React.Component {
       .catch(this.handleSubmitFailure)
   }
 
-  handleSubmitSuccess({data: {status, message}}){
-    this.setState({ loading: false, results: message});
+  handleSubmitSuccess({data: {status, message}}) {
+    this.setState({loading: false, results: message});
   }
 
-  handleSubmitFailure({data: {status, message}}){
-    this.setState({ loading: false, error: message});
+  handleSubmitFailure({data: {status, message}}) {
+    this.setState({loading: false, error: message});
   }
 
   handleCloudNameChange(e) {
-    this.setState({ cloud_name: e.target.value, error: null });
+    this.setState({cloud_name: e.target.value, error: null});
   }
 
 
   handleVideoPublicIdChange(e) {
-    this.setState({ video_public_id: e.target.value, error: null });
+    this.setState({video_public_id: e.target.value, error: null});
   }
 
-  getSubtitleLineIndex(key){
+  getSubtitleLineIndex(key) {
     return this.state.subtitles.findIndex(sub => sub.key === key);
   }
 
@@ -74,7 +76,7 @@ class SubtitleForm extends React.Component {
     });
   }
 
-  handleSubtitleLineChange(e, key, changedProperty){
+  handleSubtitleLineChange(e, key, changedProperty) {
     let index = this.getSubtitleLineIndex(key);
     let updatedSubtitles = [...this.state.subtitles];
     updatedSubtitles[index][changedProperty] = e.target.value;
@@ -85,9 +87,14 @@ class SubtitleForm extends React.Component {
   }
 
 
-  handleAddSubtitleLine(e){
+  handleAddSubtitleLine(e) {
     this.setState({
-      subtitles: [...this.state.subtitles, {start: "00:00.0", end: "00:00.0", text: '', key: Date.now()}],
+      subtitles: [...this.state.subtitles, {
+        start: "00:00.0",
+        end: "00:00.0",
+        text: '',
+        key: Date.now()
+      }],
       error: null
     });
   }
@@ -104,40 +111,71 @@ class SubtitleForm extends React.Component {
       />
     );
     return (
-      <div className="subtitle_form">
-        <div className={this.state.error ? 'error' : 'error-hidden'}>
-          {this.state.error}
-        </div>
-        <div className={this.state.loading ? 'loading' : 'loading-hidden'} >
-          loading...
-        </div>
-        <div className="cloud-name-container">
-        <label>Cloud Name</label>
-        <input
-          type="text"
-          name="subtitle_form[cloud_name]"
-          value={this.state.cloud_name}
-          onChange={this.handleCloudNameChange}
-        />
+      <div className="subtitle_form container-fluid">
+        <h1>Cloudinary Subtitle Embedder </h1>
+        <h3>Used to embed subtitles to any video hosted on Cloudinary </h3>
+        <div
+          className={"form-group row " + (this.state.error ? 'error' : 'error-hidden')}>
+          <div className="col">
+            {this.state.error}
+          </div>
         </div>
 
-        <label>Video Public Id</label>
-        <input
-          type="text"
-          name="subtitle_form[video_public_id]"
-          value={this.state.video_public_id}
-          onChange={this.handleVideoPublicIdChange}
-        />
-
-        <div className="subtitles-container">
-          {subtitle_lines}
+        <div className={"loading modal" + (this.state.loading ? "" : " hidden")}>
+          <div className="my-spinner"/>
+          <div>Loading</div>
         </div>
-        <button type="button" onClick={this.handleAddSubtitleLine}>add line</button>
 
-        <label>Results</label>
-        <div id="results">{this.state.results}</div>
+        <div className="form-group row cloud-name">
+          <label className="col-sm-2 col-form-label">Cloud Name</label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              type="text"
+              name="subtitle_form[cloud_name]"
+              value={this.state.cloud_name}
+              onChange={this.handleCloudNameChange}
+            />
+          </div>
+        </div>
 
-        <button type="button" onClick={this.onSubmit}>update</button>
+        <div className="form-group row video-public-id">
+          <label className="col-sm-2 col-form-label">Video Public Id</label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              type="text"
+              name="subtitle_form[video_public_id]"
+              value={this.state.video_public_id}
+              onChange={this.handleVideoPublicIdChange}
+            />
+          </div>
+        </div>
+
+        {subtitle_lines}
+
+        <div className="form-group row video-public-id">
+          <div className="col">
+            <button type="button" className="btn btn-primary"
+                    onClick={this.handleAddSubtitleLine}>add line
+            </button>
+          </div>
+        </div>
+
+        <div className="form-group row align-middle">
+          <div className="col-sm-1 col-form-label-lg">
+            <label>Results:</label>
+          </div>
+          <div className="col-sm-10">
+            <input className="form-control" type="text" readOnly
+                   value={this.state.results} id="results"/>
+          </div>
+          <label className="col-sm-1">
+            <button type="button" className="btn btn-info btn-lg">
+              Refresh
+            </button>
+          </label>
+        </div>
       </div>
     );
   }

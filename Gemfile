@@ -39,6 +39,11 @@ gem 'webpacker'
 gem 'react-rails'
 gem 'cloudinary_subtitles_embedder', '~> 0.1.4'
 
+# for bootstrap
+gem 'bootstrap'
+gem 'jquery-rails'
+gem 'autoprefixer-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

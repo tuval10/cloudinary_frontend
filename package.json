@@ -8,7 +8,8 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react_ujs": "^2.4.4"
+    "react_ujs": "^2.4.4",
+    "spinners": "^1.2.2"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"

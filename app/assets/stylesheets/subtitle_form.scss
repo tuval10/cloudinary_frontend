@@ -1,3 +1,23 @@
-.loading-hidden, .error-hidden {
-  display: none;
+.hidden, .error-hidden {
+  display: none  !important;
+  z-index: -1000 !important;
+}
+
+.modal{
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 1000;
+  text-align: center;
+  padding-top: 50vh;
+  opacity: 0.5;
+  background-color: gray;
+}
+
+h1, h3{
+  text-align: center;
+}
+
+.my-spinner {
+  @include spinner(5px solid #000);
 }
