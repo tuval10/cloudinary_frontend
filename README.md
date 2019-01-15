@@ -18,7 +18,7 @@ No database needed.
 
 ## Deployment instructions
 ##### 1) git clone https://github.com/tuval10/cloudinary_frontend.git
-##### 1) install dependencies
+##### 2) install dependencies (overwrite files when you run it - by pressing 'a' in [Ynaqdhm])
 ```
 bundle install
 rails webpacker:install
