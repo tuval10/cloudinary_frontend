@@ -36,6 +36,5 @@ yarn.lock
 yarn-debug.log*
 .yarn-integrity
 
-/bin
 /.idea
 Gemfile.lock
